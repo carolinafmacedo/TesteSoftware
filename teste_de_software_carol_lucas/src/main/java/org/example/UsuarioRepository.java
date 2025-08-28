@@ -5,28 +5,22 @@ import java.util.List;
 
 public class UsuarioRepository {
 
-    private List<Usuario> usuarios = new ArrayList<Usuario>();
+    private List<Usuario> usuarios = new ArrayList<>();
 
     public Usuario inserir(Usuario u) {
         this.usuarios.add(u);
         return u;
     }
 
-    public boolean buscarPorTelefone(String telefone){
-        for (Usuario u:usuarios){
-            if(u.getTelefone().equals(telefone)){
-                return true;
+    public Usuario buscarPorEmail(String email) {
+        if (email == null) {
+            return null;
+        }
+        for (Usuario u : usuarios) {
+            if (email.equals(u.getEmail())) {
+                return u;
             }
         }
-        return false;
-    };
-
-    public boolean buscarPorEmail(String email){
-        for (Usuario u:usuarios){
-            if(u.getEmail().equals(email)){
-                return true;
-            }
-        }
-        return false;
-    };
+        return null;
+    }
 }
