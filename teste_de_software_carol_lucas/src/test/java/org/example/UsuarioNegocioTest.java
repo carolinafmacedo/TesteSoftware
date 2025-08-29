@@ -48,23 +48,30 @@ public class UsuarioNegocioTest {
     }
 
     @Test
-// TC002: Tentar cadastrar com e-mail vazio
+// TC_002: Tentar cadastrar usuário com e-mail vazio
     public void testAdicionarUsuarioComEmailVazio_TC002() {
-        // Cenário: Criamos o usuário com e-mail vazio.
+        // Cenário: usuário com login e senha preenchidos, mas sem e-mail
         Usuario usuarioComEmailVazio = new Usuario(
                 "usuario",
-                "", // E-mail vazio
+                "", // e-mail vazio
                 "123456@f"
         );
 
+        // Ação: tentativa de cadastro
         Usuario resultado = usuarioNegocio.adicionar(usuarioComEmailVazio);
-        assertNotNull(resultado, "Esta mensagem aparecerá no erro: O resultado não deveria ser nulo!");
+
+        // Resultado esperado: cadastro deve falhar, retornando null
+        assertNull(resultado,
+                "O resultado deveria ser nulo, pois o campo e-mail está vazio e o sistema não deve permitir o cadastro.");
+
+        // Garantir que o repositório não foi chamado
         verify(usuarioRepository, never()).inserir(any(Usuario.class));
     }
 
+
     @Test
 // TC003: Tentar cadastrar com login (nome) contendo espaço
-    public void testAdicionarUsuarioComLoginComEspaco_TC003() {
+    public void testAdicionarUsuarioComCadastroComEspaco_TC003() {
         Usuario usuarioComEspaco = new Usuario(
                 "usuario com espaço", // Login inválido com espaço
                 "usuario@gmail.com",
