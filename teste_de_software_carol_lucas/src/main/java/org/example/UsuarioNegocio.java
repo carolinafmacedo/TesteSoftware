@@ -22,8 +22,9 @@ public class UsuarioNegocio {
             return null;
         }
 
-        // Validação 4: Verifica se o e-mail já existe no repositório.
-        if (this.rep.buscarPorEmail(u.getEmail()) != null) {
+        // Validação do TC004: O e-mail deve ter um formato válido (conter "@").
+        if (u.getEmail().contains("@")) { // Este código rejeita os e-mails BONS
+            return null;
 
         }
 
