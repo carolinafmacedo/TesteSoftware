@@ -3,7 +3,7 @@ package org.example;
 public class UsuarioNegocio {
     private UsuarioRepository rep;
 
-    public UsuarioNegocio(UsuarioRepository repo){
+    public UsuarioNegocio(UsuarioRepository repo) {
         this.rep = repo;
     }
 
@@ -49,5 +49,19 @@ public class UsuarioNegocio {
 
         // Se o usuário não existe ou a senha está incorreta, retorna null.
         return null;
+    }
+
+    public Usuario atualizar(Usuario usuario) {
+        // Lógica de validação (pode ser expandida no futuro)
+        if (usuario == null || usuario.getNome() == null || usuario.getNome().trim().isEmpty()) {
+            return null;
+        }
+        if (!usuario.getEmail().contains("@")) {
+            return null;
+        }
+        if (usuario.getSenha() == null || usuario.getSenha().trim().isEmpty()) {
+            return null;
+        }
+        return this.rep.atualizar(usuario);
     }
 }
