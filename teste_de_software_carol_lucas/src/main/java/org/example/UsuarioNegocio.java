@@ -34,5 +34,20 @@ public class UsuarioNegocio {
 
         // Se todas as validações passarem, insere o usuário.
         return this.rep.inserir(u);
+
+    }
+
+    public Usuario logar(String login, String senha) {
+        // 1. Busca o usuário no banco de dados pelo login
+        Usuario usuario = this.rep.findByLogin(login);
+
+        // 2. Verifica se o usuário foi encontrado e se a senha bate
+        if (usuario != null && usuario.getSenha().equals(senha)) {
+            // Sucesso! Retorna o usuário encontrado.
+            return usuario;
+        }
+
+        // Se o usuário não existe ou a senha está incorreta, retorna null.
+        return null;
     }
 }

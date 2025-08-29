@@ -10,8 +10,23 @@ public class UsuarioRepository {
     public Usuario inserir(Usuario u) {
         this.usuarios.add(u);
         return u;
+
     }
 
+    public Usuario findByLogin(String login) {
+        // Verifica se o login fornecido não é nulo para evitar erros.
+        if (login == null) {
+            return null;
+        }
+        for (Usuario u : usuarios) {
+            if (login.equals(u.getNome())) {
+                return u;
+            }
+        }
+        return null;
+
+
+    }
     public Usuario buscarPorEmail(String email) {
         if (email == null) {
             return null;

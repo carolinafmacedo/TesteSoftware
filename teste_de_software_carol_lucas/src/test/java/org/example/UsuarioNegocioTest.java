@@ -97,4 +97,52 @@ public class UsuarioNegocioTest {
         assertNull(resultado, "O sistema deveria rejeitar um e-mail com formato inválido.");
         verify(usuarioRepository, never()).inserir(any(Usuario.class));
     }
+
+    @Test
+// TC_005: Realizar login de usuário com informações corretas
+    public void testRealizarLoginComInformacoesCorretas_TC005() {
+        // Arrange
+        String login = "usuario";
+        String senha = "123456@f";
+        Usuario usuarioExistente = new Usuario(login, "usuario@gmail.com", senha);
+
+        when(usuarioRepository.findByLogin(login)).thenReturn(usuarioExistente);
+
+        // Act
+        Usuario usuarioLogado = usuarioNegocio.logar(login, senha);
+
+        // Assert
+        assertNotNull(usuarioLogado, "O login deveria ter sucesso e retornar um usuário.");
+        assertEquals(login, usuarioLogado.getNome(), "O usuário logado não corresponde ao esperado.");
+    }
+    @Test
+// TC_006: Realizar login de usuário com senha incorreta
+    public void testRealizarLoginComSenhaIncorreta_TC006() {
+        // Arrange: Prepara o cenário
+        // 1. O usuário que "existe" no banco tem uma senha correta.
+        String loginCorreto = "usuario";
+        String senhaCorretaNoBanco = "123456@f";
+        Usuario usuarioExistente = new Usuario(loginCorreto, "usuario@gmail.com", senhaCorretaNoBanco);
+
+        // 2. A senha que o usuário vai digitar na tela (e que vamos testar) está errada.
+        String senhaIncorretaDigitada = "123"; // Senha errada, como no seu plano de teste
+
+        // 3. Simulamos que o repositório ENCONTRA o usuário pelo login correto.
+        when(usuarioRepository.findByLogin(loginCorreto)).thenReturn(usuarioExistente);
+
+        // Act: Executa a ação de logar com a senha INCORRETA
+        Usuario resultadoLogin = usuarioNegocio.logar(loginCorreto, senhaIncorretaDigitada);
+
+        // Assert: Verifica se o resultado foi o esperado (FALHA)
+        // O sistema deve rejeitar o login, portanto, o resultado deve ser nulo.
+        assertNull(resultadoLogin, "O login deveria falhar e retornar nulo ao usar uma senha incorreta.");
+    }
+
+
+
+
+
 }
+
+
+
