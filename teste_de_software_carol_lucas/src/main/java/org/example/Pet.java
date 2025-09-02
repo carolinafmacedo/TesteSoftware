@@ -6,7 +6,7 @@ public class Pet {
     private String raca;
     private String qrCode;
     private String endereco;
-    private String donoLogin; // Link para o usuário dono do pet
+    private String donoLogin;
 
     public Pet(String nome, String especie, String raca, String qrCode, String endereco) {
         this.nome = nome;
